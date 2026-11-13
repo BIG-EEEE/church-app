@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Shell } from './app/Shell';
 import { Reader } from './features/bible/Reader';
-import { About, BibleLibrary, Give, NotFound, Saved, Search, Settings } from './routes/pages';
+import { About, BibleLibrary, NotFound, Saved, Search, Settings } from './routes/pages';
+import { Give, Prayer, Watch } from './routes/church-pages';
 import { Home } from './routes/Home';
 import { registerSW } from './sw';
 import './styles.css';
@@ -22,6 +23,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="settings" element={<Settings />} />
           <Route path="about" element={<About />} />
           <Route path="give" element={<Give />} />
+          <Route path="watch" element={<Watch />} />
+          <Route path="prayer" element={<Prayer />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

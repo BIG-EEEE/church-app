@@ -10,8 +10,8 @@ export default defineConfig({
       injectRegister: false, // registered in src/sw.ts so native shells can skip it
       includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Church App',
-        short_name: 'Church',
+        name: 'First Love Church',
+        short_name: 'First Love',
         description: 'The Bible and church life in your pocket',
         start_url: '/',
         scope: '/',

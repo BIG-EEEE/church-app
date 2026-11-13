@@ -8,9 +8,9 @@ Each one starts with research. Sources are linked in the milestone notes.
 | M0 | Research, navigation shell, plan | done |
 | M1 | Foundation: router, PWA, tests, Vercel config, native-ready seams | done |
 | M2 | Full Bible: 3 translations, reader, picker, search, bookmarks, highlights, offline | done (needs on-device check) |
-| M3 | Church content: services, sermons, events, announcements as typed data + admin | in progress: Home reads src/content/church.ts (sample data); sermons and admin next |
-| M4 | Give: Paystack mobile money and card, receipts | planned |
-| M5 | Groups, prayer requests, member sign-in and directory | planned |
+| M3 | Church content: services, events, announcements, sermons from one config | done for First Love Church (admin screen deferred) |
+| M4 | Give: page driven by config (copyable MoMo or bank details). Paystack checkout needs the church's account | partly done |
+| M5 | Prayer requests via WhatsApp, email or share sheet (done). Groups, sign-in, directory need a backend | partly done |
 | M6 | Push notifications, install prompt, light polish pass | planned |
 | M7 | Native wrap with Capacitor (see APP-UPGRADE.md) | planned |
 
@@ -51,3 +51,7 @@ on Commons) into public/art with credits.json. They appear on the Bible tab head
 - Not yet checked on a real phone or in a screenshot after the palette change (the test machine was at 100% CPU).
 - Prayer, directory and giving have no pages yet. The Give pill leads to a page that says so.
 - Single bookmark/highlight colour. Notes on verses are not built.
+
+## First Love Church
+
+The app is configured for First Love Church. Sources and open questions are in docs/FIRST-LOVE.md.

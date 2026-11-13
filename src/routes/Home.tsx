@@ -1,5 +1,6 @@
 import { ArrowUpRight, MapPin } from 'lucide-react';
 import { CHURCH, type Service } from '../content/church';
+import { assetUrl } from '../lib/platform';
 
 const DAY_MS = 86400000;
 
@@ -32,12 +33,15 @@ const clock = (hhmm: string) => {
 export function Home() {
   const now = new Date();
   const next = nextService(CHURCH.services, now);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
   const events = CHURCH.events
-    .map((e) => ({ ...e, at: new Date(now.getFullYear(), now.getMonth(), now.getDate() + e.inDays) }))
+    .map((e) => ({ ...e, at: new Date(`${e.date}T00:00:00`) }))
+    .filter((e) => e.at.getTime() >= today)
     .sort((a, b) => a.at.getTime() - b.at.getTime());
 
   return (
-    <div className="page home">
+    <div className="page home church-home">
+      <div className="bible-hero" aria-hidden="true"><img src={assetUrl(CHURCH.heroImage)} alt="" fetchPriority="high" /></div>
       {next && (
         <section className="next-service" aria-label="Next service">
           <p className="eyebrow">{relativeDay(next.at, now)}</p>
@@ -55,7 +59,7 @@ export function Home() {
         </article>
       ))}
 
-      <section className="shelf" aria-label="Coming up">
+      {events.length > 0 && <section className="shelf" aria-label="Coming up">
         <h2>Coming up</h2>
         <ul className="events">
           {events.map((e) => (
@@ -65,7 +69,7 @@ export function Home() {
             </li>
           ))}
         </ul>
-      </section>
+      </section>}
 
       <section className="shelf" aria-label="Weekly services">
         <h2>Every week</h2>
@@ -76,6 +80,13 @@ export function Home() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="shelf" aria-label="Follow">
+        <h2>Follow {CHURCH.shortName}</h2>
+        <div className="follow">
+          {CHURCH.follow.map((l) => <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="btn-ring pill">{l.label}</a>)}
+        </div>
       </section>
     </div>
   );

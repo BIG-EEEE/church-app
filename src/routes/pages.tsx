@@ -212,13 +212,10 @@ export function About() {
         ))}
       </ul>
       <p className="muted">Text from the HelloAO Bible API, built from eBible.org and the Berean Bible.</p>
+      <p className="muted">Videos are embedded from the church’s own channels and stay on YouTube. The header photo is from firstlovecenter.com and belongs to First Love Church.</p>
       <p className="muted">Engravings by Gustave Doré (1832 to 1883), public domain, from <a href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Wikimedia Commons</a>. Source pages are listed in art/credits.json.</p>
     </div>
   );
-}
-
-export function Give() {
-  return <div className="page"><h1>Give</h1><p className="muted">Giving by mobile money and card arrives in a later milestone. Nothing is collected here yet.</p></div>;
 }
 
 export function NotFound() {
