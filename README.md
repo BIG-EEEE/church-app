@@ -16,4 +16,6 @@ npm run dev
 
 `/frame.html` shows the app inside an iPhone 11 frame during development.
 
-Status: navigation shell with placeholder content. Church features are planned in `docs/PLAN.md`.
+Status: M0 to M2 done (navigation shell, PWA, full Bible reader). See docs/ROADMAP.md for milestones, docs/PLAN.md for the research, and docs/APP-UPGRADE.md for the native-app path.
+
+The Bible (BSB, KJV, WEB, all public domain) is built by scripts/build-bible.mjs into public/bible/.

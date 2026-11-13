@@ -1,6 +1,8 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
-import { Home, Compass, Ellipsis, Search, ArrowUp, X, Info, Sprout, BookOpen, CalendarDays, Mail } from 'lucide-react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Home, BookOpen, Ellipsis, Search, ArrowUp, X } from 'lucide-react';
+import { MORE } from './app/nav';
 
 /* Ported from EasyUI GooeyMenu: SVG metaball filter + spring physics.
    Surface is Apple-style glass: real backdrop blur underneath, goo tint + specular rim on top. */
@@ -17,27 +19,20 @@ const GROW = { type: 'spring', stiffness: 210, damping: 22, mass: 1 } as const;
 const SNAP = { type: 'spring', stiffness: 260, damping: 22, mass: 0.9 } as const;
 const ROW = { type: 'spring', stiffness: 420, damping: 28 } as const;
 
-export const MORE_ITEMS = [
-  { id: 'about', label: 'About', icon: Info },
-  { id: 'programs', label: 'Programs', icon: Sprout },
-  { id: 'stories', label: 'Stories', icon: BookOpen },
-  { id: 'events', label: 'Events', icon: CalendarDays },
-  { id: 'contact', label: 'Contact', icon: Mail },
-];
-
-const PANEL_H = MORE_ITEMS.length * ROW_H + PAD * 2;
+const PANEL_H = MORE.length * ROW_H + PAD * 2;
 const TOTAL_H = PANEL_H + GAP + BAR_H;
 
-type Props = {
-  scrolled: boolean;
-  query: string;
-  onQuery: (q: string) => void;
-};
+type Props = { scrolled: boolean };
 
-export function Dock({ scrolled, query, onQuery }: Props) {
+export function Dock({ scrolled }: Props) {
   const [open, setOpen] = useState(false);
-  const [searching, setSearching] = useState(false);
-  const [tab, setTab] = useState<'home' | 'explore'>('home');
+  const nav = useNavigate();
+  const { pathname } = useLocation();
+  const [sp, setSp] = useSearchParams();
+  const searching = pathname === '/search';
+  const query = sp.get('q') ?? '';
+  const onQuery = (q: string) => setSp(q ? { q } : {}, { replace: true });
+  const fromRef = useRef('/');
   const [focusIdx, setFocusIdx] = useState(0);
   const root = useRef<HTMLDivElement>(null);
   const moreBtn = useRef<HTMLButtonElement>(null);
@@ -50,8 +45,8 @@ export function Dock({ scrolled, query, onQuery }: Props) {
     };
     const key = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { setOpen(false); moreBtn.current?.focus(); }
-      if (e.key === 'ArrowUp') { e.preventDefault(); setFocusIdx((i) => (i - 1 + MORE_ITEMS.length) % MORE_ITEMS.length); }
-      if (e.key === 'ArrowDown') { e.preventDefault(); setFocusIdx((i) => (i + 1) % MORE_ITEMS.length); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); setFocusIdx((i) => (i - 1 + MORE.length) % MORE.length); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setFocusIdx((i) => (i + 1) % MORE.length); }
     };
     window.addEventListener('pointerdown', down);
     window.addEventListener('keydown', key);
@@ -59,21 +54,18 @@ export function Dock({ scrolled, query, onQuery }: Props) {
   }, [open]);
 
   useEffect(() => {
-    if (open) document.getElementById(`more-${MORE_ITEMS[focusIdx].id}`)?.focus();
+    if (open) document.getElementById(`more-${MORE[focusIdx].path.slice(1)}`)?.focus();
   }, [focusIdx, open]);
 
   const circleMode: 'close' | 'top' | 'search' = searching ? 'close' : scrolled ? 'top' : 'search';
 
   const onCircle = () => {
-    if (circleMode === 'close') { setSearching(false); onQuery(''); }
+    if (circleMode === 'close') nav(fromRef.current);
     else if (circleMode === 'top') window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-    else { setOpen(false); setSearching(true); }
+    else { setOpen(false); fromRef.current = pathname; nav('/search'); }
   };
 
-  const go = (id: string) => {
-    setOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  };
+  const go = (path: string) => { setOpen(false); nav(path); };
 
   const closedY = GAP + BAR_H - 10;
   const closed = { y: closedY, scaleX: 92 / PANEL_W, scaleY: (BAR_H - 20) / PANEL_H };
@@ -136,8 +128,8 @@ export function Dock({ scrolled, query, onQuery }: Props) {
                 </motion.label>
               ) : (
                 <motion.div key="tabs" className="tabs" initial={{ opacity: 0, filter: 'blur(4px)' }} animate={{ opacity: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, filter: 'blur(4px)' }} transition={{ duration: 0.18 }}>
-                  <Tab label="Home" icon={Home} active={!open && tab === 'home'} onClick={() => { setOpen(false); setTab('home'); window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); }} />
-                  <Tab label="Explore" icon={Compass} active={!open && tab === 'explore'} onClick={() => { setOpen(false); setTab('explore'); document.getElementById('latest')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }} />
+                  <Tab label="Home" icon={Home} active={!open && pathname === '/'} onClick={() => go('/')} />
+                  <Tab label="Bible" icon={BookOpen} active={!open && pathname.startsWith('/bible')} onClick={() => go('/bible')} />
                   <Tab ref={moreBtn} label="More" icon={Ellipsis} active={open} expanded={open} onClick={() => { setOpen((o) => !o); setFocusIdx(0); }} />
                 </motion.div>
               )}
@@ -165,9 +157,9 @@ export function Dock({ scrolled, query, onQuery }: Props) {
               exit="closed"
               variants={{ open: { transition: { staggerChildren: 0.035, delayChildren: 0.1 } }, closed: { transition: { staggerChildren: 0.012, staggerDirection: -1 } } }}
             >
-              {MORE_ITEMS.map(({ id, label, icon: Icon }, i) => (
-                <motion.li key={id} role="none" variants={{ open: { opacity: 1, y: 0, transition: ROW }, closed: { opacity: 0, y: 10, transition: { duration: 0.1 } } }}>
-                  <button id={`more-${id}`} role="menuitem" type="button" className="menu-row" tabIndex={i === focusIdx ? 0 : -1} onClick={() => go(id)} onMouseEnter={() => setFocusIdx(i)}>
+              {MORE.map(({ path, label, icon: Icon }, i) => (
+                <motion.li key={path} role="none" variants={{ open: { opacity: 1, y: 0, transition: ROW }, closed: { opacity: 0, y: 10, transition: { duration: 0.1 } } }}>
+                  <button id={`more-${path.slice(1)}`} role="menuitem" type="button" className="menu-row" data-current={pathname === path} tabIndex={i === focusIdx ? 0 : -1} onClick={() => go(path)} onMouseEnter={() => setFocusIdx(i)}>
                     <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
                     <span>{label}</span>
                   </button>
