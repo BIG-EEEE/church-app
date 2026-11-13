@@ -36,6 +36,16 @@ Each one starts with research. Sources are linked in the milestone notes.
 - Everything Bible lives on the Bible tab: continue reading, verse of the day, Old and New Testament shelves.
 - All church details live in src/content/church.ts and are SAMPLE values until the real church supplies them.
 
+## Reusing this for another church
+
+Everything church-specific is in two places: src/content/church.ts (name, address, services, announcements, events) and
+public/ (icons, art). Bible text is shared. Change those, rebuild, deploy. Milestone M3 turns church.ts into an admin-edited store.
+
+## Art
+
+Public-domain Dore engravings are fetched and verified by scripts/fetch-art.mjs (it refuses anything not flagged public domain
+on Commons) into public/art with credits.json. They appear on the Bible tab header and Stories row.
+
 ## Known gaps
 
 - Not yet checked on a real phone or in a screenshot after the palette change (the test machine was at 100% CPU).

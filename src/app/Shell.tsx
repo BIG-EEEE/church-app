@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Dock } from '../Dock';
+import { CHURCH } from '../content/church';
 
 /** Persistent frame: glass pills on top, routed page in the middle, glass dock at the bottom. */
 export function Shell() {
@@ -31,7 +32,7 @@ export function Shell() {
   return (
     <>
       <motion.header className="top" animate={{ y: hidden ? -88 : 0, opacity: hidden ? 0 : 1 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
-        <Link to="/" className="glass-pill logo" aria-label="Home">Logo</Link>
+        <Link to="/" className="glass-pill logo" aria-label={`${CHURCH.name} home`}>{CHURCH.shortName}</Link>
         <Link to="/give" className="glass-pill donate">Give<span className="arrow" aria-hidden="true"><ArrowUpRight size={16} strokeWidth={1.75} /></span></Link>
       </motion.header>
       <main><Outlet /></main>

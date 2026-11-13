@@ -6,6 +6,7 @@ export interface Announcement { id: string; title: string; body: string }
 export interface ChurchEvent { id: string; title: string; inDays: number; time: string; place: string } // inDays keeps the sample always upcoming; real events use a date
 export interface Church {
   name: string;
+  shortName: string; // shown in the top-left pill
   address: string;
   mapsUrl: string;
   services: Service[];
@@ -15,6 +16,7 @@ export interface Church {
 
 export const CHURCH: Church = {
   name: 'Your Church',
+  shortName: 'Your Church',
   address: 'Add the church address here',
   mapsUrl: 'https://www.google.com/maps',
   services: [

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Search as SearchIcon, Share2 } from 'lucide-react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { assetUrl } from '../lib/platform';
+import { HERO, STORIES } from '../content/art';
 import { loadBook, loadIndex, type BibleIndex } from '../features/bible/data';
 import { parseRef, refPath } from '../features/bible/refs';
 import { searchBible, searchTerms, type Hit } from '../features/bible/search';
@@ -40,7 +42,8 @@ export function BibleLibrary() {
   };
 
   return (
-    <div className="page home">
+    <div className="page home bible-home">
+      <div className="bible-hero" aria-hidden="true"><img src={assetUrl(`art/${HERO.slug}.webp`)} alt="" fetchPriority="high" /></div>
       <section className="today">
         <p className="eyebrow">Continue reading</p>
         <h1 className="display">{name(st.last.book)} <span className="mark">{st.last.chapter}</span></h1>
@@ -56,6 +59,19 @@ export function BibleLibrary() {
         {text ? <blockquote>“{text}”</blockquote> : <div className="skeleton"><span style={{ width: '90%' }} /><span style={{ width: '60%' }} /></div>}
         <button type="button" className="icon-btn" onClick={share} aria-label="Share today’s verse"><Share2 size={20} strokeWidth={1.5} /></button>
       </figure>
+
+      <section className="shelf" aria-label="Stories">
+        <h2>Stories</h2>
+        <div className="tiles">
+          {STORIES.map((s) => (
+            <Link key={s.slug} to={`/bible/${s.book}/${s.chapter}`} className="story">
+              <img src={assetUrl(`art/${s.slug}.webp`)} alt="" loading="lazy" />
+              <span className="arrow"><ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" /></span>
+              <span className="cap">{s.title}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {index && ([['Old Testament', index.books.filter((x) => x.order <= 39)], ['New Testament', index.books.filter((x) => x.order > 39)]] as const).map(([title, list]) => (
         <section key={title} className="shelf" aria-label={title}>
@@ -196,6 +212,7 @@ export function About() {
         ))}
       </ul>
       <p className="muted">Text from the HelloAO Bible API, built from eBible.org and the Berean Bible.</p>
+      <p className="muted">Engravings by Gustave Doré (1832 to 1883), public domain, from <a href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Wikimedia Commons</a>. Source pages are listed in art/credits.json.</p>
     </div>
   );
 }
