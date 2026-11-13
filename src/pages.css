@@ -72,6 +72,30 @@ main { padding-bottom: 160px; }
 .hits.plain span { font-family: inherit; font-size: 15px; color: var(--ink-2); }
 mark { background: var(--hl); color: inherit; border-radius: 3px; }
 
+/* ---- Feel: serif titles, big soft cards, lime highlighter, arrow circles ---- */
+.page h1 { font-family: var(--serif); font-weight: 500; font-size: 32px; letter-spacing: -0.02em; }
+.display { margin: 0 0 4px; font-family: var(--serif); font-weight: 500; font-size: 44px; line-height: 1.05; letter-spacing: -0.025em; }
+.mark { padding: 0 6px; margin: 0 -6px; border-radius: 6px; background: linear-gradient(transparent 52%, var(--lime) 52%, var(--lime) 92%, transparent 92%); }
+.today { padding: 8px 0 0; }
+.btn-row { display: flex; gap: 8px; margin-top: 24px; }
+.btn-lime { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1; height: 56px; padding: 0 24px; border-radius: 28px; background: var(--lime); color: var(--ink); font-size: 16px; font-weight: 500; text-decoration: none; transition: transform 160ms var(--ease); }
+.btn-ring { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 28px; background: var(--surface); border: 1px solid var(--hairline); color: var(--ink); text-decoration: none; transition: transform 160ms var(--ease); }
+.btn-lime:active, .btn-ring:active { transform: scale(0.97); }
+.votd { position: relative; margin: 48px 0 40px; padding: 0 8px; text-align: center; }
+.votd figcaption { font-size: 13px; font-weight: 500; color: var(--ink-2); margin-bottom: 12px; }
+.votd blockquote { margin: 0 0 8px; font-family: var(--serif); font-size: 22px; line-height: 1.45; letter-spacing: -0.005em; }
+.shelf { margin: 0 0 32px; }
+.shelf h2 { margin: 0 0 16px; font-family: var(--serif); font-weight: 500; font-size: 24px; letter-spacing: -0.015em; }
+.tiles { display: flex; gap: 12px; margin: 0 -16px; padding: 0 16px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
+.tiles::-webkit-scrollbar { display: none; }
+.tile { flex: none; width: 152px; height: 192px; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; border-radius: 28px; background: var(--surface); border: 1px solid var(--hairline); color: var(--ink); text-decoration: none; scroll-snap-align: start; transition: transform 160ms var(--ease); }
+.tile:active { transform: scale(0.98); }
+.tile .arrow { align-self: flex-end; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 16px; background: var(--lime); }
+.tile strong { display: block; font-family: var(--serif); font-weight: 500; font-size: 21px; line-height: 1.15; letter-spacing: -0.01em; }
+.tile small { display: block; margin-top: 4px; font-size: 13px; color: var(--ink-2); }
+.glass-pill.donate { padding-right: 6px; gap: 12px; }
+.glass-pill.donate .arrow { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 16px; background: var(--ink); color: var(--lime); }
+
 .radio-list { display: grid; gap: 8px; }
 .radio { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 12px 16px; border: 1px solid var(--hairline); border-radius: 16px; background: var(--surface); text-align: left; }
 .radio span { color: var(--ink-2); font-size: 14px; }

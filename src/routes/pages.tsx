@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ArrowRight, ArrowUpRight, Search as SearchIcon, Share2 } from 'lucide-react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { loadBook, loadIndex, type BibleIndex } from '../features/bible/data';
 import { parseRef, refPath } from '../features/bible/refs';
@@ -29,22 +30,46 @@ export function Home() {
     }).catch(() => setText(''));
   }, [b, c, v, st.translation]);
   const name = (id: string) => index?.books.find((x) => x.id === id)?.name ?? id;
+  const tr = index?.translations.find((t) => t.id === st.translation);
+  const ref = `${name(b)} ${c}:${v}`;
+
+  const share = async () => {
+    const msg = `“${text}” — ${ref} (${st.translation})`;
+    if (navigator.share) { try { await navigator.share({ text: msg }); } catch { /* dismissed */ } }
+    else { try { await navigator.clipboard.writeText(msg); } catch { /* no clipboard */ } }
+  };
 
   return (
     <div className="page home">
-      <section className="hero">
-        <p className="eyebrow">Verse for today</p>
-        {text ? <blockquote>{text}</blockquote> : <div className="skeleton"><span style={{ width: '90%' }} /><span style={{ width: '70%' }} /></div>}
-        <Link to={`/bible/${b}/${c}?v=${v}`} className="hero-ref">{name(b)} {c}:{v}</Link>
+      <section className="today">
+        <p className="eyebrow">Continue reading</p>
+        <h1 className="display">{name(st.last.book)} <span className="mark">{st.last.chapter}</span></h1>
+        <p className="muted">{tr ? tr.name : ' '}</p>
+        <div className="btn-row">
+          <Link to={`/bible/${st.last.book}/${st.last.chapter}`} className="btn-lime">Start reading <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" /></Link>
+          <Link to="/search" className="btn-ring" aria-label="Search the Bible"><SearchIcon size={20} strokeWidth={1.75} aria-hidden="true" /></Link>
+        </div>
       </section>
-      <Link to={`/bible/${st.last.book}/${st.last.chapter}`} className="card-link">
-        <span className="eyebrow">Continue reading</span>
-        <strong>{name(st.last.book)} {st.last.chapter}</strong>
-      </Link>
-      <Link to="/search" className="card-link">
-        <span className="eyebrow">Find a passage</span>
-        <strong>Search words or type a reference</strong>
-      </Link>
+
+      <figure className="votd">
+        <figcaption>{ref}</figcaption>
+        {text ? <blockquote>“{text}”</blockquote> : <div className="skeleton"><span style={{ width: '90%' }} /><span style={{ width: '60%' }} /></div>}
+        <button type="button" className="icon-btn" onClick={share} aria-label="Share today’s verse"><Share2 size={20} strokeWidth={1.5} /></button>
+      </figure>
+
+      {index && ([['Old Testament', index.books.filter((x) => x.order <= 39)], ['New Testament', index.books.filter((x) => x.order > 39)]] as const).map(([title, list]) => (
+        <section key={title} className="shelf" aria-label={title}>
+          <h2>{title}</h2>
+          <div className="tiles">
+            {list.map((bk) => (
+              <Link key={bk.id} to={`/bible/${bk.id}/1`} className="tile">
+                <span className="arrow"><ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" /></span>
+                <span><strong>{bk.name}</strong><small>{bk.chapters} {bk.chapters === 1 ? 'chapter' : 'chapters'}</small></span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }
