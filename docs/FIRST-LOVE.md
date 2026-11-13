@@ -11,9 +11,17 @@ Nothing here was invented. Anything not found is left empty in `src/content/chur
 | Header image | firstlovecenter.com/images/hero-poster.webp | the church site (its social preview image) |
 | Giving, contact, WhatsApp | not found | needs the church to supply them |
 
+## Permission
+
+The project owner confirmed on 2026-11-13 that the church photo and videos may be used in this app.
+
+## Live
+
+https://first-love-church-app.vercel.app (Vercel project church-app, team kmdhub). Redeploy with: npx vercel deploy --prod --yes
+Note: church-app.vercel.app belongs to a different site. Use the address above.
+
 ## To confirm with the church before launch
 
 - Service times and address
-- Permission to use the header photo and embed these videos in this app
 - Giving details (MoMo number, bank) and a prayer WhatsApp or email
 - Whether there is a different First Love Church you meant (a separate one exists in London)
