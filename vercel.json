@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!bible/|art/|church/|assets/|.*..*).*)",
+      "source": "/((?!bible/|art/|church/|assets/|.*[.].*).*)",
       "destination": "/index.html"
     }
   ],
