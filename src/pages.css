@@ -96,6 +96,24 @@ mark { background: var(--hl); color: inherit; border-radius: 3px; }
 .glass-pill.donate { padding-right: 6px; gap: 12px; }
 .glass-pill.donate .arrow { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 16px; background: var(--ink); color: var(--lime); }
 
+/* ---- Church home ---- */
+.next-service { padding: 8px 0 32px; }
+.next-service .display { font-size: 52px; margin-bottom: 8px; }
+.next-service .btn-lime { display: flex; width: 100%; margin-top: 24px; }
+.address { margin: 12px 0 0; font-size: 14px; color: var(--ink-2); }
+.note-card { margin: 0 0 32px; padding: 20px; border-radius: 28px; background: var(--surface); border: 1px solid var(--hairline); }
+.note-card h2 { margin: 0 0 4px; font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: -0.01em; }
+.note-card p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.events { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.events li { display: flex; align-items: center; gap: 16px; padding: 12px 16px 12px 12px; border-radius: 24px; background: var(--surface); border: 1px solid var(--hairline); }
+.events .date { flex: none; display: grid; place-items: center; align-content: center; width: 56px; height: 56px; border-radius: 20px; background: var(--lime); line-height: 1; }
+.events .date b { font-family: var(--serif); font-weight: 500; font-size: 22px; }
+.events .date small { margin-top: 2px; font-size: 12px; font-weight: 500; }
+.events .what { display: grid; gap: 2px; min-width: 0; }
+.events .what strong { font-weight: 500; font-size: 16px; }
+.events .what small { font-size: 13px; color: var(--ink-2); }
+.events.plain li { padding: 16px 20px; }
+
 .radio-list { display: grid; gap: 8px; }
 .radio { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 12px 16px; border: 1px solid var(--hairline); border-radius: 16px; background: var(--surface); text-align: left; }
 .radio span { color: var(--ink-2); font-size: 14px; }

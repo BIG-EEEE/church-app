@@ -8,7 +8,7 @@ Each one starts with research. Sources are linked in the milestone notes.
 | M0 | Research, navigation shell, plan | done |
 | M1 | Foundation: router, PWA, tests, Vercel config, native-ready seams | done |
 | M2 | Full Bible: 3 translations, reader, picker, search, bookmarks, highlights, offline | done (needs on-device check) |
-| M3 | Church content: services, sermons, events, announcements as typed data + admin | next |
+| M3 | Church content: services, sermons, events, announcements as typed data + admin | in progress: Home reads src/content/church.ts (sample data); sermons and admin next |
 | M4 | Give: Paystack mobile money and card, receipts | planned |
 | M5 | Groups, prayer requests, member sign-in and directory | planned |
 | M6 | Push notifications, install prompt, light polish pass | planned |
@@ -29,6 +29,12 @@ Each one starts with research. Sources are linked in the milestone notes.
   highlights. Keys are translation-independent (`JHN.3.16`).
 - **Design.** Palette is #ffffff, #fbfbfb and electric lime #ccff00, near-black ink for text. No shadows; glass is a
   backdrop blur with a hairline border.
+
+## M3 notes
+
+- Home is church-only: next service (computed from weekly services), announcement, upcoming events, weekly schedule.
+- Everything Bible lives on the Bible tab: continue reading, verse of the day, Old and New Testament shelves.
+- All church details live in src/content/church.ts and are SAMPLE values until the real church supplies them.
 
 ## Known gaps
 

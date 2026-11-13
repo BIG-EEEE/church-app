@@ -17,7 +17,7 @@ const flat = (t: string) => t.replace(/\s*\n\s*/g, ' ');
 /** Well-loved verses; one per day, the same for everyone, so it is predictable. */
 const DAILY = ['PSA.23.1', 'JHN.3.16', 'PRO.3.5', 'ISA.41.10', 'PHP.4.13', 'ROM.8.28', 'JER.29.11', 'MAT.11.28', 'PSA.46.1', 'JOS.1.9', 'ROM.12.2', 'PSA.119.105', '2CO.5.7', 'GAL.5.22', 'HEB.11.1', 'PSA.121.1', 'MAT.6.33', 'JHN.14.6', '1CO.13.4', 'EPH.2.8', 'PSA.27.1', 'ISA.40.31', 'JAS.1.5', '1JN.4.8', 'COL.3.23', 'LAM.3.22', 'MIC.6.8', 'PHP.4.6', 'PSA.37.4', '2TI.1.7', 'MAT.5.16'];
 
-export function Home() {
+export function BibleLibrary() {
   const st = useBible();
   const index = useIndex();
   const day = Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
@@ -72,11 +72,6 @@ export function Home() {
       ))}
     </div>
   );
-}
-
-export function BibleHome() {
-  const { last } = useBible();
-  return <Navigate to={`/bible/${last.book}/${last.chapter}`} replace />;
 }
 
 export function Search() {
